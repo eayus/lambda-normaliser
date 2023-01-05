@@ -15,7 +15,6 @@ executable lambda-normaliser
   other-modules:
       Eval
       Terms
-      Util
       Values
       Weaken
       Paths_lambda_normaliser
