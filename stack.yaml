@@ -1,0 +1,7 @@
+resolver: lts-20.5
+packages:
+- .
+
+extra-deps:
+- github: eayus/dependent-base
+  commit: a702a0cb93bd521ebb4cfd1d2a63a06b47fdde9a

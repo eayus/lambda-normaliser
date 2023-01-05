@@ -1,20 +1,21 @@
 module Main where
 
-import Util
+import Data.Nat
+import Data.Fin
+import qualified Data.Vect as Vect
 import Terms
-import Values
 import Eval
 
 -- Small examples showcasing the evaluator...
 
 norm' :: Expr Z -> Expr Z
-norm' = norm SZ SZ Nil
+norm' = norm SZ Vect.Nil
 
 
 -- Render expressions in a simple way (still using de Bruijn levels)
 
 showExpr :: Expr vars -> String
-showExpr (Var v)   = show $ finToInt v
+showExpr (Var v)   = show $ natToInt $ finToNat v
 showExpr (App x y) = "(" ++ showExpr x ++ " " ++ showExpr y ++ ")"
 showExpr (Lam x)   = "(Lam => " ++ showExpr x ++ ")"
 

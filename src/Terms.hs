@@ -1,7 +1,7 @@
 module Terms where
 
-import Util
-
+import Data.Fin
+import Data.Nat
 
 -- Expressions are indexed by the number of variables in scope.
 -- Variables are represented by 'de Bruijn levels'. (Not *indices*!)

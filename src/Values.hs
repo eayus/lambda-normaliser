@@ -1,7 +1,9 @@
 module Values where
 
+import Data.Fin
+import Data.Nat
+import Data.Vect
 import Terms
-import Util
 
 
 -- Values are the semantic meaning for an expression.
@@ -14,10 +16,10 @@ data Value (vars :: Nat)
 
 
 -- Environments map one scope to another. They could be interepreted as a
--- form of explicit substitution. We use a right-extending environment,
--- but then index from the left to simulate de Bruijn levels.
+-- form of explicit substitution. We use a left-extending environment,
+-- but then index from the right to simulate de Bruijn levels.
 
-type Env (from :: Nat) (to :: Nat) = RVect from (Value to)
+type Env (from :: Nat) (to :: Nat) = Vect from (Value to)
 
 
 -- A closure is a suspended computation. When evaluating lambda expressions,
@@ -25,4 +27,4 @@ type Env (from :: Nat) (to :: Nat) = RVect from (Value to)
 -- evaluation in the closure.
 
 data Closure :: Nat -> * where
-    Lazily :: SNat from -> Env from vars -> Expr (S from) -> Closure vars
+    Lazily :: Env from vars -> Expr (S from) -> Closure vars

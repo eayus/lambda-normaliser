@@ -1,7 +1,8 @@
 module Weaken where
 
-import Util
-import Terms
+import Data.Fin
+import Data.Nat
+import Data.Vect
 import Values
 
 
@@ -16,15 +17,14 @@ import Values
 
 
 weakenValue :: Value vars -> Value (S vars)
-weakenValue (VVar v)    = VVar $ weakenFin v
+weakenValue (VVar v)    = VVar $ relax v
 weakenValue (VApp x y)  = VApp (weakenValue x) (weakenValue y)
 weakenValue (VLam clos) = VLam $ weakenClosure clos
 
 
 weakenEnv :: Env from to -> Env from (S to)
-weakenEnv Nil        = Nil
-weakenEnv (Ext xs x) = Ext (weakenEnv xs) (weakenValue x)
+weakenEnv = fmap weakenValue
 
 
 weakenClosure :: Closure vars -> Closure (S vars)
-weakenClosure (Lazily from env x) = Lazily from (weakenEnv env) x
+weakenClosure (Lazily env x) = Lazily (weakenEnv env) x
